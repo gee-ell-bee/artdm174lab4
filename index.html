@@ -4,30 +4,325 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grey's Lab 4</title>
+    <title>Grey's ARTDM 174 Lab 4: Make Boxes!</title>
+    <style>
+        body {
+            font-size: 20px;
+            background-color: rgb(230, 230, 230);
+            text-align: center;
+        }
 
-    <link rel="stylesheet" href="main.css" type="text/css">
-    <script defer src="main.js"></script>
+        body {
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+h1 {
+  color: #000;
+  text-align: center;
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: #f00;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:active {
+  opacity: .5;
+}
+
+.slides {
+  width:400px;
+  margin:auto;
+  background-color: #000;
+  color: #fff;
+  padding: 2rem;
+}
+
+.slides .index {
+  margin: auto;
+}
+
+.slides figure {
+  margin:0 0 1rem 0;
+  border: 1px solid #fff;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
+  transition: all 1s ease-in-out;
+}
+
+.slides nav {
+  display: flex;
+}
+
+        section {
+            width: 400px;
+            margin: auto;
+        }
+
+        .frame {
+            position:relative;
+            width:400px;
+            height:300px;
+            margin: 1rem 0;
+        }
+
+        .slide {
+            display: block;
+        }
+
+        .hide {
+            display:none;
+            opacity: 0;
+            transition: all 1s ease-in;
+        }
+
+        .current {
+            opacity: 1;
+            transition: all 1s ease-in;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 5px solid rgb(63, 90, 63);
+            margin: 2rem auto;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-gap: 2rem;
+            max-height: 17rem;
+            overflow-x: auto;
+            overflow-y: scroll;
+        }
+
+        .ball {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color:darkseagreen;
+            color:darkgreen;
+            font-weight: bold;
+            margin: auto;
+
+            transition: all 1s ease-in-out;
+        }
+
+        .ball:hover {
+            cursor: pointer;
+        }
+
+        .btns {
+            background-color: rgb(216, 233, 216);
+            border: 1px solid rgb(158, 184, 158);
+            color: darkgreen;
+            font-family: serif;
+            font-size: 1rem;
+            margin: 1rem;
+            padding: .5rem;
+        }
+
+        .rotate {
+            transform: rotateY(360deg);
+            background-color: lightblue;
+            color: rgb(39, 137, 197);
+        }
+    </style>
 </head>
 <body>
-    <main>
-        <header>
-            <h1>Switching from Light to Dark Mode</h1>
-        </header>
-        
-        <button id="theme">Change the theme</button>
-        
-        <article>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere nulla nec orci vehicula facilisis. Cras dui metus, faucibus vel ex nec, pellentesque euismod quam. Maecenas pharetra neque sapien, id vulputate purus placerat id. Donec tristique ante sed mauris posuere, non sollicitudin enim fringilla. Mauris sit amet molestie nibh, volutpat iaculis tellus. Nulla facilisi. Cras eu consequat ante, quis ultrices nisl. Phasellus quis feugiat nibh. Integer vitae nibh non massa dignissim volutpat. Nunc augue tellus, aliquam consequat dui placerat, aliquet sollicitudin enim. Sed vel elit ut leo faucibus aliquam a sed lorem. Quisque vel purus in enim sodales condimentum quis vel eros. Integer quis hendrerit ante. Duis risus sapien, commodo eu sollicitudin eu, lacinia ut nisl.</p>
+    <h1>Slides!</h1>
 
-            <p>Sed volutpat cursus accumsan. Sed non condimentum mi, eu tristique nulla. Nunc tempor nisi id quam aliquet ultrices. Nulla facilisi. Donec dolor neque, egestas id dolor non, bibendum congue velit. Morbi lorem nulla, suscipit eu congue id, congue non urna. Suspendisse tempor tortor non elit efficitur rutrum. Sed iaculis nulla id libero rhoncus, vel laoreet tellus laoreet. Mauris nisl enim, fringilla at dapibus vitae, ultrices sed ex. Aliquam auctor et quam ac aliquam. Vivamus ut euismod ligula, id consequat elit. Nulla sit amet lorem vitae orci efficitur iaculis. Quisque bibendum malesuada neque quis auctor. Vivamus viverra elementum commodo.</p>
+<div class="slides">
+  <figure>
+    <img class="pic" src="https://assets.codepen.io/2538893/car1.jpg" alt="">
+  </figure>
+
+  <nav>
+    <a class="prev" href="">previous</a>
+    <span class="index"></span>
+    <a class="nxt" href="">next</a>
+  </nav>
+  
+</div>
+
+    <section class="container"></section>
+    <script>
+        // shortcut ref for section
+        const container = document.querySelector(".container");
+        const children = container.children;
+
+        // make element to add to container
+        const ball = document.createElement("DIV");
+        ball.classList.add("ball");
+
+        // text to add
+        const text = document.createTextNode("Prototype");
+        // add to ball
+        ball.appendChild(text);
+
+
+        // put ball inside container
+        container.appendChild(ball);
+
+        // rotate prototype
+        ball.addEventListener("click", rotateBox);
+
+        // checks
+        console.log(container, ball);
+
+        // add a button so reader can create more balls!
+        const addBtn = document.createElement("BUTTON");
+        const addBtnTxt = document.createTextNode("Create More?");
+        addBtn.appendChild(addBtnTxt);
+        addBtn.classList.add("btns");
+        addBtn.classList.add("addBtn");
+        document.body.appendChild(addBtn);
+
+        // number of boxes variable
+        const num = 9;
+
+        // make addition button functional
+        addBtn.addEventListener("click", renderBoxes);
+
+        // add button so reader can remove balls
+        const rmBtn = document.createElement("BUTTON");
+        const rmBtnTxt = document.createTextNode("Remove Some?");
+        rmBtn.classList.add("rmBtn");
+        rmBtn.classList.add("btns");
+        rmBtn.appendChild(rmBtnTxt);
+
+        function renderBoxes(e) {
+            const tempHolder = document.createDocumentFragment();
             
-            <p>Ut sit amet viverra nisi, id pharetra turpis. Integer semper ultrices odio sit amet imperdiet. Donec fringilla metus id tortor faucibus, vitae finibus turpis lacinia. Nullam quam lectus, mollis vel nisl nec, congue ultricies est. Donec convallis vestibulum ex, at feugiat sapien imperdiet porta. Nulla sed enim vitae urna sollicitudin egestas. In vulputate, ex at accumsan fringilla, lectus nulla dictum ex, eget varius turpis ipsum vel turpis. Aliquam lorem dolor, dictum eget turpis sed, placerat tincidunt lorem.</p>
-            
-            <p>Cras nec magna in justo vehicula luctus vel quis augue. Praesent auctor enim sit amet felis fringilla commodo. Sed eget odio ullamcorper, accumsan dui vitae, iaculis nisi. Nunc sagittis posuere dignissim. Suspendisse pharetra feugiat augue in varius. Duis quis urna malesuada, molestie metus eget, finibus massa. Aliquam ornare elementum vehicula. Suspendisse ac sapien volutpat, finibus ipsum vitae, dignissim sapien. Ut faucibus lacus sed erat imperdiet, eget dignissim sem viverra. Donec lectus leo, vulputate a laoreet at, pellentesque a nulla.</p>
-            
-            <p>Integer vestibulum finibus sem, id consectetur nibh. Suspendisse non sodales purus. Quisque scelerisque orci quis nulla faucibus, vel sodales purus interdum. Sed sollicitudin velit ut tortor faucibus commodo. Proin scelerisque tristique mauris vel suscipit. Curabitur mattis placerat fringilla. Duis vel consectetur leo. Aenean iaculis arcu at magna ultricies consequat. Mauris ac enim dolor. Cras rutrum, orci convallis imperdiet vehicula, libero magna tempus mauris, quis tincidunt ex justo in leo. Praesent volutpat risus imperdiet sapien euismod, fermentum commodo lacus facilisis. Cras venenatis blandit ultrices. Praesent vitae consequat magna. Nullam eget est ullamcorper ex lacinia placerat a eu ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-        </article>
-    </main>
+            for(let i = 0; i < num; i++) {
+                    // make element to add to container
+                    const ball2 = document.createElement("DIV");
+                    ball2.classList.add("ball");
+
+                    // text to add
+                    const text2 = document.createTextNode("Ball " + Number(i+1));
+                    // add to ball
+                    ball2.appendChild(text2);
+
+                    // put ball inside container
+                    tempHolder.appendChild(ball2);
+
+                    ball2.addEventListener("click", rotateBox);
+
+                    if(!document.body.contains(document.querySelector('.rmBtn'))) {
+                        document.body.appendChild(rmBtn);
+                    }
+            }
+
+            /*if(e.target.className = "addBtn") { */
+                
+                // add temp holder to page
+                container.appendChild(tempHolder);
+
+            /*}*/
+
+            /* if(e.target.className = "rmBtn") {
+
+                // remove temp holder
+                container.removeChild(tempHolder);
+            }*/
+        }
+
+        // add a button to log container nodes
+        const logBtn = document.createElement("BUTTON");
+        const logBtnTxt = document.createTextNode("Check Nodes");
+        logBtn.classList.add("btns");
+        logBtn.classList.add("logBtn");
+        logBtn.appendChild(logBtnTxt);
+        document.body.appendChild(logBtn);
+
+        // make log button functional
+        logBtn.addEventListener("click", logNodes);
+        function logNodes(e) {
+            console.log(container.childNodes);
+        }
+
+        // make removal button functional
+        rmBtn.addEventListener("click", removeBoxes);
+        function removeBoxes() {
+            const tempHolder = document.createDocumentFragment();
+
+            const rem = container.children;
+
+
+            console.log(rem, rem.length, rem.length - num);
+            for(let i = rem.length - 1, j = rem.length - num; i >= j; i--) {
+                rem[i].remove();
+            };
+
+            // add temp holder to page
+            container.appendChild(tempHolder);
+
+            if(children.length <! num) {
+                console.log(children.length, num);
+                document.body.removeChild(rmBtn);
+            }
+        }
+
+        function rotateBox(e) {
+            e.target.classList.toggle("rotate");
+        }
+
+        // base vars
+        const baseURL = 'https://assets.codepen.io/2538893/';
+        const nxt = document.querySelector('.nxt');
+        const prev = document.querySelector('.prev');
+
+        // index span var
+        let ind = document.querySelector('.index');
+
+        const slide = document.querySelector('.pic');
+        const cars = ['car1.jpg', 'car2.jpg', 'car3.jpg', 'car4.jpg'];
+        let index = 0;
+
+
+        // init populate index
+        ind.innerHTML = `${index + 1} / ${cars.length}`;
+
+
+        // next button event listener
+        nxt.addEventListener('click', function(e) {
+        e.preventDefault();
+        index = index + 1;
+        slide.src = baseURL + cars[index];
+        console.log(slide.src);
+        
+        ind.innerHTML = `${index + 1} / ${cars.length}`;
+
+        //write a conditional so that the images wrap back to the beginning image.
+        if(index >= cars.length - 1) {
+            index = -1;
+        }
+        });
+
+        // previous button event listener
+        prev.addEventListener('click', function(e) {
+        e.preventDefault();
+        index = index - 1;
+        
+        // check if no more images
+        if(index < 0) {
+            index = cars.length - 1;
+        }
+        
+        slide.src = baseURL + cars[index];
+        console.log(slide.src);
+        ind.innerHTML = `${index + 1} / ${cars.length}`;
+        });
+    </script>
 </body>
 </html>
