@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make Boxes!</title>
+    <title>Grey's ARTDM 174 Lab 4: Make Boxes!</title>
     <style>
         body {
             font-size: 20px;
@@ -19,7 +19,8 @@
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             grid-gap: 2rem;
             max-height: 17rem;
-            overflow: scroll;
+            overflow-x: auto;
+            overflow-y: scroll;
         }
 
         .ball {
@@ -45,6 +46,10 @@
             margin: 1rem;
             padding: .5rem;
         }
+
+        .rotate {
+            transform: rotateY(360deg);
+        }
     </style>
 </head>
 <body>
@@ -53,6 +58,7 @@
     <script>
         // shortcut ref for section
         const container = document.querySelector(".container");
+        const children = container.children;
 
         // make element to add to container
         const ball = document.createElement("DIV");
@@ -78,13 +84,23 @@
         addBtn.classList.add("addBtn");
         document.body.appendChild(addBtn);
 
+        // number of boxes variable
+        const num = 9;
+
         // make addition button functional
         addBtn.addEventListener("click", renderBoxes);
+
+        // add button so reader can remove balls
+        const rmBtn = document.createElement("BUTTON");
+        const rmBtnTxt = document.createTextNode("Remove Some?");
+        rmBtn.classList.add("rmBtn");
+        rmBtn.classList.add("btns");
+        rmBtn.appendChild(rmBtnTxt);
 
         function renderBoxes(e) {
             const tempHolder = document.createDocumentFragment();
             
-            for(let i = 0; i < 9; i++) {
+            for(let i = 0; i < num; i++) {
                     // make element to add to container
                     const ball2 = document.createElement("DIV");
                     ball2.classList.add("ball");
@@ -96,6 +112,10 @@
 
                     // put ball inside container
                     tempHolder.appendChild(ball2);
+
+                    if(!document.body.contains(document.querySelector('.rmBtn'))) {
+                        document.body.appendChild(rmBtn);
+                    }
             }
 
             /*if(e.target.className = "addBtn") { */
@@ -126,17 +146,25 @@
             console.log(container.childNodes);
         }
 
-        // add button so reader can remove balls
-        const rmBtn = document.createElement("BUTTON");
-        const rmBtnTxt = document.createTextNode("Remove Some?");
-        rmBtn.classList.add("btns");
-        rmBtn.appendChild(rmBtnTxt);
-        document.body.appendChild(rmBtn);
-
         // make removal button functional
         rmBtn.addEventListener("click", removeBoxes);
-        function removeBoxes(e) {
-            
+        function removeBoxes() {
+            const tempHolder = document.createDocumentFragment();
+
+            const rem = container.children;
+
+            console.log(rem, rem.length, rem.length - num);
+            for(let i = rem.length - 1, j = rem.length - num; i >= j; i--) {
+                rem[i].remove();
+            };
+
+            // add temp holder to page
+            container.appendChild(tempHolder);
+
+            if(children.length <! num) {
+                console.log(children.length, num);
+                document.body.removeChild(rmBtn);
+            }
         }
 
     </script>
