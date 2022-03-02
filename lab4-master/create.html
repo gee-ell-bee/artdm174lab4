@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .holder {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-gap:1rem;
+            padding:5rem;
+            border:5px solid;
+        }
+
+        .box {
+            width:100px;
+            height:100px;
+            background-color: #333;
+            color: white;
+            text-align:center;
+        }
+
+        .box:first-child {
+            background: #999;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html">Part 1: DOM methods</a>
+    <section class="holder">
+
+    </section>
+
+
+    <script>
+        const holder = document.querySelector('.holder');
+
+        //make stuff
+        const box = document.createElement('DIV');
+        box.classList.add('box');
+        const name = document.createTextNode('proto');
+        box.appendChild(name);
+        holder.appendChild(box);
+
+
+        /* Let make it happen interactively */
+        const button = document.createElement('BUTTON');
+        button.innerText = "make boxes";
+        button.className = "make-btn";
+        button.addEventListener('click', renderBoxes);
+        document.body.insertBefore(button, holder);
+
+        function renderBoxes(e) {
+            //make stuff
+            for(let i=0; i < 100; i++) {
+                const box = document.createElement('DIV');
+                const holder = e.target.nextElementSibling;
+                box.classList.add('box');
+                const name = document.createTextNode('Box ' + i);
+                box.appendChild(name);
+                holder.appendChild(box);
+            }
+        }
+
+    </script>
+
+   
+</body>
+</html>
